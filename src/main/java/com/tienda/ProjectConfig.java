@@ -14,6 +14,8 @@ public class ProjectConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/ejemplo2").setViewName("ejemplo2");
+        registry.addViewController("/Multimedia").setViewName("Multimedia");
+        registry.addViewController("/iframe").setViewName("iframe");
 
     }
 
