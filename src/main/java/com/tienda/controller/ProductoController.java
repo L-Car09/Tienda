@@ -2,6 +2,7 @@ package com.tienda.controller;
 
 
 import com.tienda.domain.Producto;
+import com.tienda.service.CategoriaService;
 import com.tienda.service.ProductoService;
 import com.tienda.service.FirebaseStorageService;
 import java.util.Locale;
@@ -22,12 +23,21 @@ public class ProductoController {
     
     @Autowired
     private ProductoService productoService; 
+    @Autowired
+    private CategoriaService categoriaService; 
+    
+    
+    
     
     @GetMapping("/listado")
     public String listado(Model model) {       
         var lista = productoService.getProductos(false);        
         model.addAttribute("productos", lista);
-        model.addAttribute("totalProductos", lista.size());      
+        model.addAttribute("totalProductos", lista.size());  
+        
+        var categorias=categoriaService.getCategorias(true);
+        model.addAttribute("categorias", categorias);
+        
         return "/producto/listado";
     }
     
@@ -72,6 +82,10 @@ public class ProductoController {
     public String modificar(Producto producto, Model model) {       
         producto=productoService.getProducto(producto);
         model.addAttribute("producto", producto);
+        
+        var categorias=categoriaService.getCategorias(true);
+        model.addAttribute("categorias", categorias);
+        
         return "/producto/modifica";
     }
     
