@@ -27,13 +27,125 @@
                         <div class="d-flex justify-content-center">
                             <img th:src="${p.rutaImagen}" alr="..." height="200"/>
                         </div>
+                        <figcaption class="d-flex justify-content-evenly">
+                            <span>¢[[${p.precio}]]</span>
+                            <span>([[${p.existencias}]])</span>
+                            <form>
+                                <input type="hidden" name="idProducto" th:value="${p.idProducto}"/>
+                                <input type="hidden" name="existencias" th:value="${p.existencias}"/>
+                               <button class="btn btn-light"
+                                       onclick="addCart(this.form)"> 
+                                   <i class="fas fa-cart-arrow-down"></i>
+                               </button>
+                            </form>    
+                        </figcaption>
                     </figure>
+                    <div class="card-header text-center">
+                        <h5>[[${p.descripcion}]]</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>[[${p.detalle}]]</p>
+                    </div>    
                 </div>
             </div>  
             
             
         </section>
-
-
+        
+        <section th:fragment="filtros">
+           <div class="row row-cols-4 p-2">
+               <form th:action="@{/pruebas/query1}"
+                     method="post">
+                     <div class="card p-2">
+                         <div class="card-header text-center bg-primary text-white">
+                             <h5>[[#{pruebas.ampliadas}]]</h5>
+                         </div>
+                         <div class="card-body">
+                             <div class="mb-3">
+                                 <label>[[#{pruebas.precio.inferior}]]</label>
+                                 <input type="number" name="precioInf"
+                                        min="0"
+                                        th:value="${precioInf}" requiered="true"/>
+                             </div>
+                             
+                             <div class="mb-3">
+                                 <label>[[#{pruebas.precio.superior}]]</label>
+                                 <input type="number" name="precioSup"
+                                        min="0" class="form-control"
+                                        th:value="${precioSup}" requiered="true"/>
+                             </div> 
+                         </div>
+                         <div class="card-footer">
+                             <button type="submit"
+                                     class="btn btn-primary text-center text-white">
+                                  <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.ampliadas}]]
+                             </button>
+                         </div>
+                     </div>
+                </form>
+               
+               <form th:action="@{/pruebas/query2}"
+                     method="post">
+                     <div class="card p-2">
+                         <div class="card-header text-center bg-info text-white">
+                             <h5>[[#{pruebas.jpql}]]</h5>
+                         </div>
+                         <div class="card-body">
+                             <div class="mb-3">
+                                 <label>[[#{pruebas.precio.inferior}]]</label>
+                                 <input type="number" name="precioInf"
+                                        min="0"
+                                        th:value="${precioInf}" requiered="true"/>
+                             </div>
+                             
+                             <div class="mb-3">
+                                 <label>[[#{pruebas.precio.superior}]]</label>
+                                 <input type="number" name="precioSup"
+                                        min="0" class="form-control"
+                                        th:value="${precioSup}" requiered="true"/>
+                             </div> 
+                         </div>
+                         <div class="card-footer">
+                             <button type="submit"
+                                     class="btn btn-info text-center text-white">
+                                  <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.jpql}]]
+                             </button>
+                         </div>
+                     </div>
+                </form>
+               <form th:action="@{/pruebas/query3}"
+                     method="post">
+                     <div class="card p-2">
+                         <div class="card-header text-center bg-success text-white">
+                             <h5>[[#{pruebas.nativo}]]</h5>
+                         </div>
+                         <div class="card-body">
+                             <div class="mb-3">
+                                 <label>[[#{pruebas.precio.inferior}]]</label>
+                                 <input type="number" name="precioInf"
+                                        min="0"
+                                        th:value="${precioInf}" requiered="true"/>
+                             </div>
+                             
+                             <div class="mb-3">
+                                 <label>[[#{pruebas.precio.superior}]]</label>
+                                 <input type="number" name="precioSup"
+                                        min="0" class="form-control"
+                                        th:value="${precioSup}" requiered="true"/>
+                             </div> 
+                         </div>
+                         <div class="card-footer">
+                             <button type="submit"
+                                     class="btn btn-success text-center text-white">
+                                  <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.nativo}]]
+                             </button>
+                         </div>
+                     </div>
+                </form>
+      
+               
+               
+           </div>
+        </section>
     </body>
 </html>
