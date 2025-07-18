@@ -9,33 +9,35 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductoService {
-    
+
     //Se crea un objeto de manera única (sólo una instancia) para todo el proyecto y de manera automática
     @Autowired
-    private ProductoRepository productoRepository;   
-    @Transactional(readOnly=true)
+    private ProductoRepository productoRepository;
+
+    @Transactional(readOnly = true)
     public List<Producto> getProductos(boolean activo) {
-        var lista = productoRepository.findAll();       
+        var lista = productoRepository.findAll();
         //Se valida si sólo se desean las productos activas...
         if (activo) {
             //Sólo se quieren activas...
             lista.removeIf(c -> !c.isActivo());
-        }       
+        }
         return lista;
     }
-    
-    @Transactional(readOnly=true)
-    public Producto getProducto(Producto producto) {       
+
+    @Transactional(readOnly = true)
+    public Producto getProducto(Producto producto) {
         return productoRepository.findById(producto.getIdProducto())
                 .orElse(null);
     }
-    
+
     @Transactional
-    public void save(Producto producto) {       
+    public void save(Producto producto) {
         productoRepository.save(producto);
     }
+
     @Transactional
-    public boolean delete(Producto producto) {  
+    public boolean delete(Producto producto) {
         try {
             productoRepository.delete(producto);
             productoRepository.flush();
@@ -44,19 +46,24 @@ public class ProductoService {
             return false;
         }
     }
-    
+
     @Transactional(readOnly = true)
     public List<Producto> consultaAmpliada(double precioInf, double precioSup) {
         return productoRepository.findByPrecioBetweenOrderByPrecio(precioInf, precioSup);
     }
-    
+
     @Transactional(readOnly = true)
     public List<Producto> consultaJPQL(double precioInf, double precioSup) {
         return productoRepository.consultaJPQL(precioInf, precioSup);
     }
-    
+
     @Transactional(readOnly = true)
     public List<Producto> consultaSQL(double precioInf, double precioSup) {
         return productoRepository.consultaSQL(precioInf, precioSup);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Producto> productosMayoresA(double precioMin) {
+        return productoRepository.findByPrecioGreaterThanOrderByPrecio(precioMin);
     }
 }

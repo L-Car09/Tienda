@@ -14,7 +14,11 @@
             <div class="row py-4 mb-2 bg-light">
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarCategoriaModal">
+                    <button type="button" 
+                             sec:authorize="hasRole('ROLE_ADMIN')"
+                            class="btn btn-primary" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#agregarCategoriaModal">
                         <i class="fa-solid fa-plus"></i> [[#{categoria.agregar}]]
                     </button>
                 </div>
@@ -71,7 +75,7 @@
 
         </section>
 
-        <!-- fragmento 3 para el listado de categorias -->
+        <!-- fragmento 2 para el listado de categorias -->
         <section th:fragment="listado" class="p-3">
             <div class="row p-3">
                 <div class="col-md-9">
@@ -88,7 +92,7 @@
                                             <th>[[#{categoria.descripcion}]]</th>
                                             <th>[[#{categoria.imagen}]]</th>
                                             <th>[[#{categoria.activo}]]</th>
-                                            <th></th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,7 +101,7 @@
                                             <td>[[${c.descripcion}]]</td>
                                             <td><img th:src="@{${c.rutaImagen}}" alt="noData" height="75"/></td>
                                             <td th:text="${c.activo} ? 'Activa':'Inactiva'"></td>
-                                            <td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">
                                                 <div class="d-flex align-items-start">                                                    
                                                     <button type="button"
                                                             class="btn btn-danger"

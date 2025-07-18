@@ -4,7 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <head th:replace="~{layout/plantilla :: head}"/>
     <body>
-        <header th:replace="~{layout/plantilla :: header}"/>            
+        <header th:replace="~{layout/plantilla :: header}"/>   
+        
+        <section th:replace="~{pruebas/fragmentos :: tarjetas}"/>
        
         <footer th:replace="~{layout/plantilla :: footer}"/>           
     </body>
