@@ -99,12 +99,15 @@ public class RegistroService {
         return clave;
     }
 
-    //Ojo cómo le lee una informacion del application.properties
-    @Value("${servidor.http}")
+
+    @Autowired
+    private ConstanteService constanteService;
     private String servidor;
 
     private void enviaCorreoActivar(Usuario usuario, String clave) throws MessagingException {
         String mensaje = messageSource.getMessage("registro.correo.activar", null, Locale.getDefault());
+        servidor = constanteService.getValorDeAtrubuto(dominio);
+        
         mensaje = String.format(mensaje, usuario.getNombre(), usuario.getApellidos(), servidor, usuario.getUsername(), clave);
 
         String asunto = messageSource.getMessage("registro.mensaje.activacion", null, Locale.getDefault());
@@ -114,8 +117,9 @@ public class RegistroService {
 
     private void enviaCorreoRecordar(Usuario usuario, String clave) throws MessagingException {
         String mensaje = messageSource.getMessage("registro.correo.recordar", null, Locale.getDefault());
+        servidor = constanteService.getValorDeAtrubuto(dominio);
         mensaje = String.format(mensaje, usuario.getNombre(), usuario.getApellidos(), servidor, usuario.getUsername(), clave);
-
+        
         String asunto = messageSource.getMessage("registro.mensaje.recordar", null, Locale.getDefault());
 
         correoService.enviarCorreoHtml(usuario.getCorreo(), asunto, mensaje);
